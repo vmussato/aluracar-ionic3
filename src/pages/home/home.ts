@@ -7,8 +7,63 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  public carros;
 
+  constructor(public navCtrl: NavController) {
+    this.carros = [
+      {
+        nome: "Brasilia Amarela",
+        preco: 2000
+      },
+      {
+        nome: "Uno branco",
+        preco: 4000
+      },
+      {
+        nome: "Celta 1.0",
+        preco: 10000
+      },
+      {
+        nome: "Ferrari",
+        preco: 2000
+      },
+      {
+        nome: "Brasilia Amarela",
+        preco: 2000
+      },
+      {
+        nome: "Brasilia Amarela",
+        preco: 2000
+      },
+      {
+        nome: "Brasilia Amarela",
+        preco: 2000
+      },
+      {
+        nome: "Brasilia Amarela",
+        preco: 2000
+      },
+      {
+        nome: "Brasilia Amarela",
+        preco: 2000
+      },
+      {
+        nome: "Brasilia Amarela",
+        preco: 2000
+      },
+      {
+        nome: "Brasilia Amarela",
+        preco: 2000
+      },
+      {
+        nome: "Brasilia Amarela",
+        preco: 2000
+      },
+      {
+        nome: "Brasilia Amarela",
+        preco: 2000
+      },
+    ];
   }
 
 }
