@@ -1,70 +1,50 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { Carro } from '../../modelos/carro';
-
+import { HttpErrorResponse } from '@angular/common/http';
+import { CarrosServiceProvider } from '../../providers/carros-service/carros-service';
+import { NavLifecycles } from '../../utils/ionic/nav/nav-lifecycles';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage {
+export class HomePage implements NavLifecycles {
 
   public carros: Carro[];
 
-  constructor(public navCtrl: NavController) {
-    this.carros = [
-      {
-        nome: "Brasilia Amarela",
-        preco: 2000
-      },
-      {
-        nome: "Uno branco",
-        preco: 4000
-      },
-      {
-        nome: "Celta 1.0",
-        preco: 10000
-      },
-      {
-        nome: "Ferrari",
-        preco: 2000
-      },
-      {
-        nome: "Brasilia Amarela",
-        preco: 2000
-      },
-      {
-        nome: "Brasilia Amarela",
-        preco: 2000
-      },
-      {
-        nome: "Brasilia Amarela",
-        preco: 2000
-      },
-      {
-        nome: "Brasilia Amarela",
-        preco: 2000
-      },
-      {
-        nome: "Brasilia Amarela",
-        preco: 2000
-      },
-      {
-        nome: "Brasilia Amarela",
-        preco: 2000
-      },
-      {
-        nome: "Brasilia Amarela",
-        preco: 2000
-      },
-      {
-        nome: "Brasilia Amarela",
-        preco: 2000
-      },
-      {
-        nome: "Brasilia Amarela",
-        preco: 2000
-      },
-    ];
+  constructor(public navCtrl: NavController, 
+    private _loadingCtrl: LoadingController,
+    private _alertCtrl: AlertController,
+    private _carrosService: CarrosServiceProvider) {}
+
+
+  ionViewDidLoad() {
+    let loading = this._loadingCtrl.create({
+      content: 'Carregando carros...'
+    })
+
+    loading.present();
+    this._carrosService.lista()
+            .subscribe( 
+              (carros) => {
+                this.carros = carros;
+
+                loading.dismiss();
+              },
+              (err: HttpErrorResponse) => {
+                console.log(err)
+
+                loading.dismiss();
+
+                this._alertCtrl.create({
+                  title: 'Falha na conexão',
+                  subTitle: 'Não foi possível carregar a lista de carros, tente novamente mais tarde',
+                  buttons: [
+                    { text: 'Ok'}
+                  ]
+                }).present();
+              }
+              )
   }
 
 }
