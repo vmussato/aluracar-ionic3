@@ -18,6 +18,7 @@ import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/observable/of';
 
 import { IonicStorageModule } from '@ionic/storage';
+import { AgendamentoDaoProvider } from '../providers/agendamento-dao/agendamento-dao';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { IonicStorageModule } from '@ionic/storage';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CarrosServiceProvider,
-    AgendamentosServiceProvider
+    AgendamentosServiceProvider,
+    AgendamentoDaoProvider
   ]
 })
 export class AppModule {}
