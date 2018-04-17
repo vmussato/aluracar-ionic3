@@ -7,6 +7,7 @@ import { HomePage } from '../home/home';
 import { Agendamento } from '../../modelos/agendamento';
 import { Observable } from 'rxjs/Observable';
 import { AgendamentoDaoProvider } from '../../providers/agendamento-dao/agendamento-dao';
+import { mergeMap } from 'rxjs/operator/mergeMap';
 
 @IonicPage()
 @Component({
@@ -72,7 +73,15 @@ export class CadastroPage {
 
     let mensagem = '';
 
-    this._agendamentosService.agenda(agendamento)
+    this._agendamentoDao.ehduplicado(agendamento)
+        .mergeMap(ehDuplicado => {
+          if(ehDuplicado) {
+            throw new Error('Agendamento existente!');
+          }
+
+          return this._agendamentosService.agenda(agendamento)
+        })
+
         .mergeMap((valor) => {
           let observable = this._agendamentoDao.salva(agendamento);
           if(valor instanceof Error) {

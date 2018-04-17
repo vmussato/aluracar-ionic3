@@ -23,4 +23,13 @@ export class AgendamentoDaoProvider {
     return Observable.fromPromise(promise);
   }
 
+  ehduplicado(agendamento: Agendamento) {
+    let chave = this._geraChave(agendamento);
+    let promise = this._storage
+                      .get(chave)
+                      .then(dado => dado ? true : false);
+
+    return Observable.fromPromise(promise)
+  }
+
 }
